@@ -13,7 +13,7 @@ path          = require 'path'
 _             = require 'underscore'
 _.str         = require 'underscore.string'
 _.mixin(_.str.exports())
-#require 'mongoose-attachments/lib/providers/localfs'
+require 'mongoose-attachments-localfs/lib/localfs-provider'
 
 Promise = mongoose.Promise
 Schema  = mongoose.Schema
@@ -137,10 +137,10 @@ if configuration.usingS3()
   }
   attachmentsConfig.directory = 'badge-images'
 else
-  console.log "Using local filesystem for Badge images"
+  console.log "Using local filesystem for Badge images: " + configuration.get('local_storage')
   attachmentsConfig.storage = {
-    providerName: 'fs'
-    options: '/Users/jobin2/codez/Sash/public/uploads1'
+    providerName: 'localfs'
+    options: configuration.get('local_storage')
   }
   attachmentsConfig.directory = configuration.get('upload_dir');
 
