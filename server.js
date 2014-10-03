@@ -6,8 +6,6 @@
 // require('nodetime').profile()
 
 
-require('coffee-script');
-
 // var memwatch = require('memwatch');
 // memwatch.on('leak', function(info) {
 //   console.log("Memory Leak Info: ", info);

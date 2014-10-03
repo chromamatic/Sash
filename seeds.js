@@ -1,5 +1,4 @@
 process.env.NODE_ENV = 'development'
-require('coffee-script')
 require('./load_models')
 
 
