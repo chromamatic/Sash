@@ -1,6 +1,6 @@
 mongoose      = require 'mongoose'
 timestamps    = require 'mongoose-timestamps'
-attachments   = require 'mongoose-attachments'
+attachments   = require 'mongoose-attachments-localfs'
 moment        = require 'moment'
 configuration = require '../lib/configuration'
 arrayUtils    = require '../lib/array'
@@ -13,7 +13,6 @@ path          = require 'path'
 _             = require 'underscore'
 _.str         = require 'underscore.string'
 _.mixin(_.str.exports())
-require 'mongoose-attachments-localfs/lib/localfs-provider'
 
 Promise = mongoose.Promise
 Schema  = mongoose.Schema
@@ -140,7 +139,9 @@ else
   console.log "Using local filesystem for Badge images: " + configuration.get('local_storage')
   attachmentsConfig.storage = {
     providerName: 'localfs'
-    options: configuration.get('local_storage')
+    options:
+      directory: configuration.get('local_storage')
+    
   }
   attachmentsConfig.directory = configuration.get('upload_dir');
 
