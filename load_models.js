@@ -2,7 +2,7 @@
 // interactive note console
 
 if(typeof process.env.NODE_ENV === 'undefined'){
-  process.env.NODE_ENV = 'development'
+    process.env.NODE_ENV = 'development'
 }
 
 global.Organization = require('./models/organization')

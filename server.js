@@ -15,23 +15,23 @@
 // });
 
 if(typeof process.env.NODE_ENV === 'undefined')
-  process.env.NODE_ENV = 'development'
+    process.env.NODE_ENV = 'development'
 
 
 
 if (process.env.NODE_ENV === 'development')
-  process.env.PORT = 3000
-  process.env.HOST = 'localhost:'+process.env.PORT
+    process.env.PORT = 3000
+    process.env.HOST = 'localhost:'+process.env.PORT
 
 if (process.env.NODE_ENV === 'test')
-  process.env.PORT = 3001
-  process.env.HOST = 'localhost:'+process.env.PORT
+    process.env.PORT = 3001
+    process.env.HOST = 'localhost:'+process.env.PORT
 
 var express = require('express'),
-    mongodb = require('mongoose'),
-    expressMongoose = require('express-mongoose'),
-    RedisStore = require('connect-redis')(express),
-    configuration = require('./lib/configuration');
+        mongodb = require('mongoose'),
+        expressMongoose = require('express-mongoose'),
+        RedisStore = require('connect-redis')(express),
+        configuration = require('./lib/configuration');
 
 require('express-namespace');
 
@@ -42,25 +42,25 @@ var app = module.exports = express.createServer();
 redisConfig = configuration.get('redis');
 console.log(redisConfig);
 app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.set('port', process.env.PORT);
-  app.set('upload_dir', __dirname + '/public/uploads/');
-  if (process.env.NODE_ENV === 'development'){
-    app.use(express.logger());
-  }
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser());
-  app.use(express.session({
-    secret: configuration.get('cookie_secret'),
-    store: new RedisStore(redisConfig)
-  }));
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.set('port', process.env.PORT);
+    app.set('upload_dir', __dirname + '/public/uploads/');
+    if (process.env.NODE_ENV === 'development'){
+        app.use(express.logger());
+    }
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(express.cookieParser());
+    app.use(express.session({
+        secret: configuration.get('cookie_secret'),
+        store: new RedisStore(redisConfig)
+    }));
 
-  // app.use(startHeapSnapshot);
-  app.use(app.router);
-  // app.use(endHeapSnapshot);
-  app.use(express.static(__dirname + '/public'));
+    // app.use(startHeapSnapshot);
+    app.use(app.router);
+    // app.use(endHeapSnapshot);
+    app.use(express.static(__dirname + '/public'));
 });
 
 // var hd;
@@ -78,15 +78,15 @@ app.configure(function(){
 // }
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 });
 
 app.configure('test', function(){
-  app.set('port', 3001);
+    app.set('port', 3001);
 });
 
 // Helpers
@@ -101,5 +101,5 @@ require('./apps/static/routes')(app);
 
 
 app.listen(app.settings.port, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+    console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
