@@ -69,7 +69,7 @@ routes = function(app) {
                 orgId = req.org.id;
             }
             return res.render("" + __dirname + "/views/new", {
-                badge: new Badge,
+                badge: new Badge(),
                 orgId: orgId
             });
         });
@@ -85,10 +85,10 @@ routes = function(app) {
                     if (err) {
                         next(err);
                     }
-                    btu = new BadgesToUsers;
+                    btu = new BadgesToUsers();
                     btu.badgeId = doc._id;
                     btu.users = [];
-                    return btu.save(function(err, btu_doc) {
+                    return btu.save(function(err) {
                         if (err) {
                             next(err);
                         }
@@ -146,7 +146,7 @@ routes = function(app) {
                             next(err);
                         }
                         badge.set(req.body.badge);
-                        return badge.save(function(err, doc) {
+                        return badge.save(function(err) {
                             if (err) {
                                 next(err);
                             }
@@ -160,7 +160,7 @@ routes = function(app) {
                     slug: req.params.slug
                 }, function(err, badge) {
                     badge.set(req.body.badge);
-                    return badge.save(function(err, doc) {
+                    return badge.save(function(err) {
                         if (err) {
                             next(err);
                         }
@@ -170,11 +170,11 @@ routes = function(app) {
                 });
             }
         });
-        app.del('/:slug', function(req, res, next) {
+        app.del('/:slug', function(req, res) {
             return Badge.findOne({
                 slug: req.params.slug
             }, function(err, badge) {
-                return badge.remove(function(err) {
+                return badge.remove(function() {
                     if (req.xhr) {
                         return res.send(JSON.stringify({
                             success: true
@@ -288,10 +288,10 @@ routes = function(app) {
                     });
                     return;
                 }
-                if (username == null) {
+                if (!username) {
                     username = email;
                 }
-                if (!((badge != null) & ((username != null) || (email != null)))) {
+                if (!badge && (!username || !email)) {
                     console.error("Can't issue badge " + req.params.slug + ", doesn't exist");
                     res.send(JSON.stringify({
                         issued: false
