@@ -111,7 +111,7 @@ RESPONSE:
 
 ## Technology behind Sash
 
-  Sash is builting using Node.js & CoffeeScript, on top of the delightful Express.js framework. 
+  Sash is builting using Node.js on top of the delightful Express.js framework. 
   Sash uses MongoDB for the database.
 
 ## Ok COOL. How do I get started??
