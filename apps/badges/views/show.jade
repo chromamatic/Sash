@@ -18,16 +18,14 @@ div#badge-show
         tr
           td Criteria
           td #{badge.criteria}
-        tr
-          td Facebook Share Text
-          td #{badge.facebook_text}
-        tr
-          td Twitter Share Text
-          td #{badge.twitter_text}
-        if badge.linki
+        if badge.hidden
           tr
-            td Share Link
-            td #{badge.link}
+            td Hidden
+            td #{badge.hidden}
+        if badge.value
+          tr
+            td Point Value
+            td #{badge.value}
         if badge.version
           tr
             td Version

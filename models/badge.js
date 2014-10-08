@@ -23,10 +23,10 @@ BadgeSchema = new Schema({
     name: String,
     description: String,
     criteria: String,
-    facebook_text: String,
-    twitter_text: String,
-    link: String,
-    version: String,
+    version: Number,
+    value: Number,
+    hidden: Boolean,
+
     issuer_id: {
         type: Schema.ObjectId,
         ref: 'Organization'
@@ -44,7 +44,7 @@ BadgeSchema = new Schema({
 
 BadgeSchema.plugin(timestamps);
 
-BadgeSchema.pre('remove', function(next, done) {
+BadgeSchema.pre('remove', function(next) {
     var btu, removeBadge, self, users;
     self = this;
     users = [];
@@ -263,7 +263,7 @@ BadgeSchema.pre('save', function(next) {
 
 BadgeSchema.methods.issuer = function(callback) {
     var promise;
-    promise = new Promise;
+    promise = new Promise();
     if (callback) {
         promise.addBack(callback);
     }
@@ -273,7 +273,7 @@ BadgeSchema.methods.issuer = function(callback) {
 
 BadgeSchema.methods.assertion = function(callback) {
     var assertion, promise;
-    promise = new Promise;
+    promise = new Promise();
     if (callback) {
         promise.addBack(callback);
     }
@@ -299,13 +299,13 @@ BadgeSchema.methods.assertion = function(callback) {
 
 BadgeSchema.methods.issuedCount = function(callback) {
     var promise;
-    promise = new Promise;
+    promise = new Promise();
     if (callback) {
         promise.addBack(callback);
     }
     User.count({
         'badges.slug': this.slug
-    }, (function(_this) {
+    }, (function() {
         return function(err, count) {
             return promise.resolve(err, count);
         };
